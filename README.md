@@ -21,6 +21,25 @@ Designed to be dropped into any React project with minimal setup.
 
 ---
 
+# 📚 Table of Contents
+
+- [✨ Features](#-features)
+- [📦 Installation](#-installation)
+- [🚀 Quick Start](#-quick-start)
+- [⚙️ Props](#️-props)
+- [🖼️ Component Preview](#️-component-preview)
+- [📁 Project Structure](#-project-structure)
+- [🧩 Source Code](#-source-code)
+  - [LoginPage](#loginpage)
+  - [Styling](#styling)
+  - [Entry Point](#entry-point)
+- [📦 Package Configuration](#-package-configuration)
+- [💻 Development](#-development)
+- [🔗 Local Testing](#-local-testing)
+- [🚀 Publishing Updates](#-publishing-updates)
+- [🤝 Contributing](#-contributing)
+- [📄 License](#-license)
+
 ## ✨ Features
 
 - 🎨 Clean and responsive UI
