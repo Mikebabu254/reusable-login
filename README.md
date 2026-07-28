@@ -1,212 +1,191 @@
-# 🔑 Reusable React Login Component
+<div align="center">
 
-A lightweight, styled, and customizable React login page component written in JavaScript. Easily integrate authentication UI across any of your React projects without re-writing layout or CSS. Built with CSS Modules for isolated styling and bundled with microbundle.
+# 🔐 Reusable React Login
 
-## 📖 Table of Contents
+A lightweight, customizable, and reusable React login component built with **JavaScript**, **CSS Modules**, and **Microbundle**.
 
-- Installation & Usage
-  - 1. Installation
-  - 2. Quick Start
-- Props API
-- How This Package Was Created
-  - 1. Directory Structure
-  - 2. Source Code
-  - 3. Configuration
-- Local Development & Testing
-- License
+Create beautiful authentication pages in seconds without rewriting the same login UI for every project.
+
+![React](https://img.shields.io/badge/React-16.8%2B-61DAFB?logo=react)
+![JavaScript](https://img.shields.io/badge/JavaScript-ES6-yellow)
+![License](https://img.shields.io/badge/License-MIT-green)
+![Bundle](https://img.shields.io/badge/Bundled%20with-Microbundle-blue)
+
+</div>
 
 ---
 
-## 📦 Installation & Usage
+## ✨ Features
 
-### 1. Installation
+- 🚀 Ready to use
+- 🎨 Clean modern UI
+- 🔒 Built-in loading & error states
+- 📦 Lightweight package
+- 🎯 CSS Modules (no style conflicts)
+- ⚡ Async login support
+- ♻️ Reusable across multiple projects
+- 🛠 Easy customization
 
-You can install this package in any React project directly from GitHub:
+---
 
+# 📦 Installation
+
+Install directly from GitHub.
+
+```bash
 npm install github:Mikebabu254/reusable-login
+```
 
-### 2. Quick Start
+or
 
-Import the compiled CSS stylesheet along with the LoginPage component in your React application:
+```bash
+yarn add github:Mikebabu254/reusable-login
+```
 
-import React from 'react';
-import 'reusable-login/dist/index.css';
-import { LoginPage } from 'reusable-login';
+---
+
+# 🚀 Quick Start
+
+Import the stylesheet together with the component.
+
+```jsx
+import React from "react";
+import "reusable-login/dist/index.css";
+import { LoginPage } from "reusable-login";
 
 export default function App() {
   const handleLogin = async ({ email, pass }) => {
-    const response = await fetch('/api/login', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email, pass }),
+    const response = await fetch("/api/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        email,
+        pass,
+      }),
     });
 
     if (!response.ok) {
-      throw new Error('Invalid email or password');
+      throw new Error("Invalid email or password");
     }
 
-    const data = await response.json();
-    console.log('User logged in successfully:', data);
+    const user = await response.json();
+
+    console.log(user);
   };
 
   return (
-    <LoginPage logoUrl="https://via.placeholder.com/150" onLogin={handleLogin}/>
+    <LoginPage
+      logoUrl="https://via.placeholder.com/150"
+      onLogin={handleLogin}
+    />
   );
 }
+```
 
 ---
 
-## ⚙️ Props API
+# 📸 Preview
 
-The LoginPage component accepts the following props:
+> Add a screenshot here
 
-- onLogin: (credentials: { email: string, pass: string }) => Promise<void> (Required)
-  Async callback function triggered on form submission. Returning or throwing an error automatically updates the loading/error states in the UI.
-- logoUrl: string (Optional)
-  URL or asset path for a logo image displayed above the login card.
+```
+docs/
+    preview.png
+```
+
+```md
+![Preview](docs/preview.png)
+```
 
 ---
 
-## 🛠️ How This Package Was Created
+# ⚙️ Props
 
-If you want to understand how this package was built or reproduce it from scratch, here is the full code setup.
+| Prop | Type | Required | Description |
+|------|------|----------|-------------|
+| **onLogin** | Function | ✅ Yes | Async function executed when the login form is submitted. Throwing an error automatically displays the error message. |
+| **logoUrl** | String | ❌ No | Logo image displayed above the login form. |
 
-### 1. Directory Structure
+---
 
-reusable-login/
-├── src/
-│   ├── index.js             # Main entry point
-│   ├── LoginPage.jsx        # Login UI & submission logic
-│   └── LoginPage.module.css # Scoped CSS Module
-├── .gitignore               # Excludes build artifacts & dependencies
-├── package.json             # Package metadata & build scripts
-└── README.md                # Documentation
+## Example
 
-### 2. Source Code
+```jsx
+<LoginPage
+    logoUrl="/logo.png"
+    onLogin={handleLogin}
+/>
+```
 
-#### src/LoginPage.jsx
+---
 
-import React, { useState } from 'react';
-import styles from './LoginPage.module.css';
+# 🧠 How It Works
 
-export function LoginPage({ onLogin, logoUrl }) {
-  const [email, setEmail] = useState('');
-  const [pass, setPass] = useState('');
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState('');
+When the user submits the form:
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setLoading(true);
-    setError('');
+1. Loading state starts
+2. Your `onLogin()` function is called
+3. If successful, the component finishes loading
+4. If an error is thrown, it is automatically displayed
 
-    try {
-      await onLogin({ email, pass });
-    } catch (err) {
-      setError(err.message || 'Login failed');
-    } finally {
-      setLoading(false);
-    }
-  };
+No additional state management is required.
 
-  return (
-    <div className={styles.card}>
-      {logoUrl && <img src={logoUrl} alt="Logo" className={styles.logo} />}
-      <h2 className={styles.title}>Sign In</h2>
-      {error && <p className={styles.error}>{error}</p>}
+---
 
-      <form onSubmit={handleSubmit} className={styles.form}>
-        <input 
-          type="email" 
-          placeholder="Email address" 
-          value={email} 
-          onChange={(e) => setEmail(e.target.value)} 
-          className={styles.input}
-          required 
-        />
-        <input 
-          type="password" 
-          placeholder="Password" 
-          value={pass} 
-          onChange={(e) => setPass(e.target.value)} 
-          className={styles.input}
-          required 
-        />
-        <button type="submit" disabled={loading} className={styles.button}>
-          {loading ? 'Signing in...' : 'Sign In'}
-        </button>
-      </form>
-    </div>
-  );
-}
+# 📁 Project Structure
 
-#### src/LoginPage.module.css
+```
+reusable-login
+│
+├── src
+│   ├── LoginPage.jsx
+│   ├── LoginPage.module.css
+│   └── index.js
+│
+├── dist
+│
+├── package.json
+├── README.md
+└── .gitignore
+```
 
-.card {
-  max-width: 400px;
-  margin: 40px auto;
-  padding: 32px;
-  border-radius: 8px;
-  border: 1px solid #e2e8f0;
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-  background-color: #ffffff;
-  font-family: system-ui, -apple-system, sans-serif;
-}
+---
 
-.logo {
-  display: block;
-  max-height: 48px;
-  margin: 0 auto 16px auto;
-}
+# 🏗 Source Files
 
-.title {
-  margin: 0 0 20px 0;
-  text-align: center;
-  color: #1a202c;
-}
+## LoginPage.jsx
 
-.error {
-  color: #e53e3e;
-  font-size: 14px;
-  margin-bottom: 12px;
-}
+Contains:
 
-.form {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
+- Login form
+- Validation
+- Loading state
+- Error handling
+- Async submit logic
 
-.input {
-  padding: 10px 12px;
-  border: 1px solid #cbd5e0;
-  border-radius: 4px;
-  font-size: 14px;
-}
+---
 
-.button {
-  padding: 10px 12px;
-  background-color: #3182ce;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  font-weight: 600;
-  cursor: pointer;
-}
+## LoginPage.module.css
 
-.button:disabled {
-  opacity: 0.6;
-  cursor: not-allowed;
-}
+Contains isolated component styling using **CSS Modules**, preventing global CSS conflicts.
 
-### 3. Configuration
+---
 
-#### src/index.js
+## index.js
 
-export { LoginPage } from './LoginPage.jsx';
+Exports the package.
 
-#### package.json
+```javascript
+export { LoginPage } from "./LoginPage.jsx";
+```
 
+---
+
+# 📦 Package Configuration
+
+```json
 {
   "name": "reusable-login",
   "version": "1.0.0",
@@ -225,35 +204,108 @@ export { LoginPage } from './LoginPage.jsx';
     "microbundle": "^0.15.0"
   }
 }
-
-#### .gitignore
-
-node_modules
-dist
-.DS_Store
+```
 
 ---
 
-## 💻 Local Development & Testing
+# 💻 Local Development
 
-If you want to modify this component locally or contribute to it:
+Clone the repository.
 
-1. Clone the repository:
-   git clone https://github.com/Mikebabu254/reusable-login.git
-   cd reusable-login
+```bash
+git clone https://github.com/Mikebabu254/reusable-login.git
+```
 
-2. Install dependencies:
-   npm install
+Navigate into the project.
 
-3. Build the package:
-   npm run build
+```bash
+cd reusable-login
+```
 
-4. Link locally to test in another project:
-   npm link
-   (Then inside your consuming React app folder: npm link reusable-login)
+Install dependencies.
+
+```bash
+npm install
+```
+
+Build the package.
+
+```bash
+npm run build
+```
 
 ---
 
-## 📄 License
+## Test Locally
 
-MIT
+Link the package.
+
+```bash
+npm link
+```
+
+Inside another React project:
+
+```bash
+npm link reusable-login
+```
+
+---
+
+# 🎨 Customization
+
+You can easily customize:
+
+- Logo
+- Authentication logic
+- API endpoint
+- Colours
+- Fonts
+- Button styles
+- Input styles
+
+by editing `LoginPage.module.css`.
+
+---
+
+# 🤝 Contributing
+
+Contributions are welcome.
+
+1. Fork the repository
+
+2. Create a feature branch
+
+```bash
+git checkout -b feature/my-feature
+```
+
+3. Commit your changes
+
+```bash
+git commit -m "Added new feature"
+```
+
+4. Push
+
+```bash
+git push origin feature/my-feature
+```
+
+5. Open a Pull Request
+
+---
+
+# 📄 License
+
+Licensed under the **MIT License**.
+
+---
+
+<div align="center">
+
+Made with ❤️ using React
+
+If you like this package, consider giving the repository a ⭐
+
+</div>
