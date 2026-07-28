@@ -1,38 +1,75 @@
-# 🔑 Reusable React Login Component
+# My Reusable Login Component
 
-A lightweight, zero-config, pre-styled React login page written in pure JavaScript. Built with **CSS Modules** for isolated styling and bundled with **microbundle**.
-
-This package is designed to be pushed to GitHub and installed into any React app—just like a standard `npm` package—without needing to publish to the public npm registry.
+A lightweight, styled, and customizable React login page component written in JavaScript. Easily integrate authentication UI across any of your React projects without re-writing layout or CSS.
 
 ---
 
-## 📖 Table of Contents
+## 📦 Installation
 
-- [How This Package Was Created](#-how-this-package-was-created)
-  - [1. Directory Structure](#1-directory-structure)
-  - [2. Component & Styles](#2-component--styles)
-  - [3. Entry Point](#3-entry-point)
-  - [4. Package Configuration (`package.json`)](#4-package-configuration-packagejson)
-- [📦 Installation & Usage](#-installation--usage)
-  - [1. Installation](#1-installation)
-  - [2. Basic Implementation](#2-basic-implementation)
-- [⚙️ Props API](#️-props-api)
-- [💻 Local Development & Testing](#-local-development--testing)
+You can install this package directly from GitHub:
 
----
+```bash
+npm install github:Mikebabu254/reusable-login
 
-## 🛠️ How This Package Was Created
+🚀 Quick Start
+To use the component, import the library alongside its compiled CSS file into your React application.
 
-If you want to understand how this package was built or reproduce it from scratch, here is the full blueprint.
+import React from 'react';
 
-### 1. Directory Structure
+// 1. Import the default styles
+import 'my-reusable-login/dist/index.css';
 
-```text
-my-reusable-login/
-├── src/
-│   ├── index.js             # Main entry point (exports components)
-│   ├── LoginPage.jsx        # Login UI & submission logic
-│   └── LoginPage.module.css # Scoped CSS Module
-├── .gitignore               # Excludes build artifacts & dependencies
-├── package.json             # Package metadata, peer dependencies & build scripts
-└── README.md                # Documentation
+// 2. Import the component
+import { LoginPage } from 'my-reusable-login';
+
+export default function App() {
+  const handleLogin = async ({ email, pass }) => {
+    // Send the credentials to your backend API
+    const response = await fetch('/api/login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, pass }),
+    });
+
+    if (!response.ok) {
+      throw new Error('Invalid email or password');
+    }
+
+    // Handle success (e.g., store token, redirect user)
+    console.log('User logged in successfully');
+  };
+
+  return (
+    <LoginPage logoUrl="[https://via.placeholder.com/150](https://via.placeholder.com/150)" onLogin="{handleLogin}"/>
+  );
+}
+
+
+⚙️ Props APIThe <LoginPage /> component accepts the following props:PropTypeRequiredDescriptiononLogin(credentials: { email, pass }) => Promise<void>YesA callback function triggered on form submission. Must return a Promise so the component can handle loading and error states.logoUrlstringNoURL or path to an image file to display at the top of the card.
+
+🎨 Customizing & Local Development
+If you want to modify this package locally or contribute to it:
+
+Clone the repository:
+
+Bash
+git clone [https://github.com/YOUR_GITHUB_USERNAME/my-reusable-login.git](https://github.com/YOUR_GITHUB_USERNAME/my-reusable-login.git)
+cd my-reusable-login
+Install dependencies:
+
+Bash
+npm install
+Build the package:
+
+Bash
+npm run build
+Link locally to test in another project:
+
+Bash
+npm link
+Then inside your consuming React app folder:
+
+Bash
+npm link my-reusable-login
+📄 License
+MIT
