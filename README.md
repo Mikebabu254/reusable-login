@@ -1,30 +1,51 @@
-<div align="center">
+# 🔐 Reusable Login
 
-# 🔐 Reusable React Login
+<p align="center">
+  <img src="https://via.placeholder.com/180x80?text=Reusable+Login" alt="Reusable Login Logo">
+</p>
 
-A lightweight, customizable, and reusable React login component built with **JavaScript**, **CSS Modules**, and **Microbundle**.
+<p align="center">
+A lightweight, customizable React login component with built-in loading and error handling.
+<br/>
+Designed to be dropped into any React project with minimal setup.
+</p>
 
-Create beautiful authentication pages in seconds without rewriting the same login UI for every project.
+<p align="center">
 
 ![React](https://img.shields.io/badge/React-16.8%2B-61DAFB?logo=react)
-![JavaScript](https://img.shields.io/badge/JavaScript-ES6-yellow)
+![JavaScript](https://img.shields.io/badge/JavaScript-ES6+-F7DF1E?logo=javascript)
+![CSS Modules](https://img.shields.io/badge/CSS-Modules-blue)
 ![License](https://img.shields.io/badge/License-MIT-green)
-![Bundle](https://img.shields.io/badge/Bundled%20with-Microbundle-blue)
 
-</div>
+</p>
 
 ---
 
 ## ✨ Features
 
-- 🚀 Ready to use
-- 🎨 Clean modern UI
-- 🔒 Built-in loading & error states
-- 📦 Lightweight package
-- 🎯 CSS Modules (no style conflicts)
-- ⚡ Async login support
-- ♻️ Reusable across multiple projects
-- 🛠 Easy customization
+- 🎨 Clean and responsive UI
+- ⚡ Built with React Hooks
+- 🔒 Password field included
+- ⏳ Automatic loading state
+- ❌ Built-in error handling
+- 🖼️ Optional logo support
+- 🎯 Easy authentication integration
+- 📦 Lightweight bundle using Microbundle
+- 🎭 Scoped styling with CSS Modules
+
+---
+
+# 📑 Table of Contents
+
+- [Installation](#-installation)
+- [Quick Start](#-quick-start)
+- [Props](#-props)
+- [Component Preview](#-component-preview)
+- [Project Structure](#-project-structure)
+- [Source Code](#-source-code)
+- [Development](#-development)
+- [Build](#-build)
+- [License](#-license)
 
 ---
 
@@ -36,7 +57,7 @@ Install directly from GitHub.
 npm install github:Mikebabu254/reusable-login
 ```
 
-or
+or with Yarn
 
 ```bash
 yarn add github:Mikebabu254/reusable-login
@@ -46,24 +67,21 @@ yarn add github:Mikebabu254/reusable-login
 
 # 🚀 Quick Start
 
-Import the stylesheet together with the component.
-
 ```jsx
 import React from "react";
 import "reusable-login/dist/index.css";
 import { LoginPage } from "reusable-login";
 
 export default function App() {
+
   const handleLogin = async ({ email, pass }) => {
+
     const response = await fetch("/api/login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({
-        email,
-        pass,
-      }),
+      body: JSON.stringify({ email, pass }),
     });
 
     if (!response.ok) {
@@ -73,6 +91,7 @@ export default function App() {
     const user = await response.json();
 
     console.log(user);
+
   };
 
   return (
@@ -86,51 +105,32 @@ export default function App() {
 
 ---
 
-# 📸 Preview
-
-> Add a screenshot here
-
-```
-docs/
-    preview.png
-```
-
-```md
-![Preview](docs/preview.png)
-```
-
----
-
 # ⚙️ Props
 
 | Prop | Type | Required | Description |
 |------|------|----------|-------------|
-| **onLogin** | Function | ✅ Yes | Async function executed when the login form is submitted. Throwing an error automatically displays the error message. |
-| **logoUrl** | String | ❌ No | Logo image displayed above the login form. |
+| **onLogin** | `({ email, pass }) => Promise<void>` | ✅ | Called when the user submits the form. Throwing an error automatically displays it in the UI. |
+| **logoUrl** | `string` | ❌ | Displays a logo above the login form. |
 
 ---
 
-## Example
+# 🖼️ Component Preview
 
-```jsx
-<LoginPage
-    logoUrl="/logo.png"
-    onLogin={handleLogin}
-/>
 ```
-
----
-
-# 🧠 How It Works
-
-When the user submits the form:
-
-1. Loading state starts
-2. Your `onLogin()` function is called
-3. If successful, the component finishes loading
-4. If an error is thrown, it is automatically displayed
-
-No additional state management is required.
++-----------------------------------+
+|            LOGO                   |
+|                                   |
+|           Sign In                 |
+|                                   |
+| Email Address                     |
+| [___________________________]     |
+|                                   |
+| Password                          |
+| [___________________________]     |
+|                                   |
+|      [ Sign In Button ]           |
++-----------------------------------+
+```
 
 ---
 
@@ -140,9 +140,9 @@ No additional state management is required.
 reusable-login
 │
 ├── src
+│   ├── index.js
 │   ├── LoginPage.jsx
-│   ├── LoginPage.module.css
-│   └── index.js
+│   └── LoginPage.module.css
 │
 ├── dist
 │
@@ -153,29 +153,39 @@ reusable-login
 
 ---
 
-# 🏗 Source Files
+# 🧩 Source Code
 
-## LoginPage.jsx
+## LoginPage
 
-Contains:
+```jsx
+export function LoginPage({ onLogin, logoUrl }) {
+    ...
+}
+```
 
-- Login form
-- Validation
+Handles
+
+- Email input
+- Password input
 - Loading state
-- Error handling
-- Async submit logic
+- Error state
+- Form submission
 
 ---
 
-## LoginPage.module.css
+## Styling
 
-Contains isolated component styling using **CSS Modules**, preventing global CSS conflicts.
+Uses **CSS Modules** to prevent class name collisions.
+
+```css
+.card {
+    ...
+}
+```
 
 ---
 
-## index.js
-
-Exports the package.
+## Entry Point
 
 ```javascript
 export { LoginPage } from "./LoginPage.jsx";
@@ -208,27 +218,27 @@ export { LoginPage } from "./LoginPage.jsx";
 
 ---
 
-# 💻 Local Development
+# 💻 Development
 
-Clone the repository.
+Clone the repository
 
 ```bash
 git clone https://github.com/Mikebabu254/reusable-login.git
 ```
 
-Navigate into the project.
+Navigate into the project
 
 ```bash
 cd reusable-login
 ```
 
-Install dependencies.
+Install dependencies
 
 ```bash
 npm install
 ```
 
-Build the package.
+Build the package
 
 ```bash
 npm run build
@@ -236,15 +246,15 @@ npm run build
 
 ---
 
-## Test Locally
+# 🔗 Local Testing
 
-Link the package.
+Link the package
 
 ```bash
 npm link
 ```
 
-Inside another React project:
+Inside another React project
 
 ```bash
 npm link reusable-login
@@ -252,60 +262,46 @@ npm link reusable-login
 
 ---
 
-# 🎨 Customization
+# 🚀 Publishing Updates
 
-You can easily customize:
+After making changes
 
-- Logo
-- Authentication logic
-- API endpoint
-- Colours
-- Fonts
-- Button styles
-- Input styles
+```bash
+npm version patch
+npm run build
+git add .
+git commit -m "Update component"
+git push
+```
 
-by editing `LoginPage.module.css`.
+Consumers can then install the latest version
+
+```bash
+npm install github:Mikebabu254/reusable-login
+```
 
 ---
 
 # 🤝 Contributing
 
-Contributions are welcome.
+Contributions are welcome!
 
 1. Fork the repository
-
 2. Create a feature branch
-
-```bash
-git checkout -b feature/my-feature
-```
-
 3. Commit your changes
-
-```bash
-git commit -m "Added new feature"
-```
-
-4. Push
-
-```bash
-git push origin feature/my-feature
-```
-
+4. Push the branch
 5. Open a Pull Request
 
 ---
 
 # 📄 License
 
-Licensed under the **MIT License**.
+This project is licensed under the **MIT License**.
 
 ---
 
-<div align="center">
+<p align="center">
 
-Made with ❤️ using React
+Made with ❤️ by **Michael Ndolo**
 
-If you like this package, consider giving the repository a ⭐
-
-</div>
+</p>
