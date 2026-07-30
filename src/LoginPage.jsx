@@ -22,7 +22,7 @@ export function LoginPage({ onLogin, logoUrl }) {
   };
 
   return (
-    <div className={styles.login-form}>
+    <div className={styles.card}>
       {logoUrl && <img src={logoUrl} alt="Logo" className={styles.logo} />}
       <h2 className={styles.title}>Sign In</h2>
       {error && <p className={styles.error}>{error}</p>}
