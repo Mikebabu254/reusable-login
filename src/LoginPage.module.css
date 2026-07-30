@@ -9,7 +9,7 @@
   font-family: sans-serif;
 }
 
-/* .logo {
+.logo {
   display: block;
   max-height: 48px;
   margin: 0 auto 16px auto;
@@ -53,10 +53,10 @@
 .button:disabled {
   opacity: 0.6;
   cursor: not-allowed;
-} */ */
+} 
 
 
-.login-form {
+/* .login-form {
   display: flex;
   flex-direction: column;
   gap: 15px;
@@ -90,4 +90,4 @@
 
 .login-form button:hover {
   background-color: #45a049;
-}
+} */
